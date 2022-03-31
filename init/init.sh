@@ -15,6 +15,6 @@ sudo -v
 # fi
 
 echo "Run Playbook"
-ansible-playbook ./playbooks/init.yml --ask-become-pass --syntax-check
-# ansible-playbook ./playbooks/init.yml --ask-become-pass --check
+# ansible-playbook ./playbooks/init.yml --ask-become-pass --syntax-check
+ansible-playbook ./playbooks/init.yml --ask-become-pass --check
 # # ansible-playbook ./playbooks/init.yml --ask-become-pass

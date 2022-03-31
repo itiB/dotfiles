@@ -3,8 +3,45 @@
   hosts: localhost
   gather_facts: false
   connection: local
+  vars_files:
+    - 'vars/links.yml'
+    - 'vars/apt.yml'
+  
   tasks:
-    - name: clone itib/dotfile repo
-      git:
-        repo: https://github.com/itiB/dotfiles.git
-        dest: ~/.dotfiles
+    # - name: clone itib/dotfile repo
+    #   git:
+    #     repo: https://github.com/itiB/dotfiles.git
+    #     dest: ~/.dotfiles
+
+    - name: Create folder
+      file:
+        path: "{{item}}"
+        state: directory
+      loop:
+        - "~/.config/git/"
+        - "~/.zsh/"
+
+    - name: Include APT package list
+      include_vars: vars/apt.yml
+      tags:
+        - apt
+
+    - name: Update/Upgrade apt
+      become: yes
+      apt:
+        update_cache: true
+        upgrade: dist
+
+    - name: Manage apt packages
+      become: yes
+      apt:
+        name: "{{ item.key }}"
+        state: "{{ item.value.state | default('latest') }}"
+      with_dict: "{{ apt }}"
+
+    - name: Create dotfiles symbolic links
+      file:
+        src: "~/.dotfiles/{{ item.name }}"
+        dest: "{{ item.dest }}"
+        state: link
+      loop: "{{ links }}"

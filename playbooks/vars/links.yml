@@ -1,0 +1,6 @@
+---
+links:
+- name: zshrc
+  dest: ~/.zshrc
+- name: vimrc
+  dest: ~/.vimrc
