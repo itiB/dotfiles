@@ -5,14 +5,15 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Zinit
-if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}"
+if [[ ! -f ${ZINIT_HOME}/zinit/zinit.zsh ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.zsh/zinit" && command chmod g-rwX "$HOME/.zsh"
-    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.zsh/zinit/bin" && \
+    command mkdir -p "${ZINIT_HOME}" && command chmod g-rwX "${ZINIT_HOME}"
+    command git clone https://github.com/zdharma-continuum/zinit "${ZINIT_HOME}/zinit" && \
         print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
         print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
-source "$HOME/.zsh/zinit/bin/zinit.zsh"
+source "${ZINIT_HOME}/zinit/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
@@ -22,7 +23,7 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zaw
 
-[[ ! -f ~/.dotfiles/p10k.zsh ]] || source ~/.dotfiles/p10k.zsh
+[[ ! -f ~/.dotfiles/zsh/p10k.zsh ]] || source ~/.dotfiles/zsh/p10k.zsh
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
