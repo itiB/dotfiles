@@ -1,0 +1,135 @@
+{
+    // Appearance
+    "workbench.startupEditor": "none",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorCustomizations" : {
+        "editorWhitespace.foreground": "#727272"
+    },
+    "editor.fontFamily": "Cica, Consolas, 'Courier New', monospace",
+    "editor.fontSize": 20,
+    "editor.minimap.showSlider": "always",
+    "editor.renderLineHighlight": "all",
+    "editor.renderWhitespace": "boundary",
+    "editor.rulers": [80, 100],
+    "editor.largeFileOptimizations": false,
+    "files.autoSave": "onFocusChange",
+    "files.eol": "\n",
+    "files.watcherExclude": {
+        "**/target/**": true
+    },
+    "terminal.integrated.fontSize": 20,
+    "terminal.integrated.copyOnSelection": true,
+    "debug.inlineValues": true,
+    "debug.internalConsoleOptions": "openOnSessionStart",
+    "explorer.compactFolders": false,
+    "git.decorations.enabled": true,
+    "liveServer.settings.donotShowInfoMsg": true,
+
+    "html.autoClosingTags": false,
+    "auto-close-tag.SublimeText3Mode": true,
+    "auto-close-tag.activationOnLanguage": [
+        "html",
+        "xml",
+        "php",
+        "blade",
+        "ejs",
+        "jinja",
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact",
+        "plaintext",
+        "vue",
+        "liquid",
+        "erb",
+        "lang-cfml",
+        "cfml",
+        "HTML (EEx)",
+        "HTML (Eex)",
+        "plist"
+    ],
+
+    // Latex
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "ptex2pdf",
+            "tools": [
+                "Step 1: ptex2pdf",
+                "Step 3: ptex2pdf"
+            ]
+        },
+        {
+            "name": "ptex2pdf+pbibtex",
+            "tools": [
+                "Step 1: ptex2pdf",
+                "Step 2: pbibtex",
+                "Step 3: ptex2pdf",
+                "Step 4: ptex2pdf"
+            ]
+        },
+    ], 
+    "latex-workshop.latex.tools": [
+        {
+            "command": "ptex2pdf",
+            "args": [
+                "-l",
+                "-ot",
+                "-kanji=utf8 -synctex=1",
+                "-interaction=nonstopmode",
+                "%DOC%"
+            ],
+            "name": "Step 1: ptex2pdf"
+        },
+        {
+            "command": "pbibtex",
+            "args": [
+                "%DOCFILE%",
+                "-kanji=utf8"
+            ],
+            "name": "Step 2: pbibtex"
+        },
+        {
+            "command": "ptex2pdf",
+            "args": [
+                "-l",
+                "-ot",
+                "-kanji=utf8 -synctex=1",
+                "-interaction=nonstopmode",
+                "%DOC%"
+            ],
+            "name": "Step 3: ptex2pdf"
+        },
+        {
+            "command": "ptex2pdf",
+            "args": [
+                "-l",
+                "-ot",
+                "-kanji=utf8 -synctex=1",
+                "-interaction=nonstopmode",
+                "%DOC%"
+            ],
+            "name": "Step 4: ptex2pdf"
+        },
+    ],
+
+    // Python Setting
+    "python.languageServer": "Pylance",
+    "python.showStartPage": false,
+    "editor.semanticTokenColorCustomizations": {
+        "[One Dark Pro]": { // Apply to this theme only
+            "enabled": true,
+            "rules": {
+                "magicFunction:python": "#ee0000",
+                "function.declaration:python": "#990000",
+                "*.decorator:python": "#0000dd",
+                "*.typeHint:python": "#5500aa",
+                "*.typeHintComment:python": "#aaaaaa"
+            }
+        }
+    },
+    "rust-client.revealOutputChannelOn": "info",
+    "rust-analyzer.checkOnSave.command": "clippy",
+
+    "markdown.preview.fontSize": 20
+}
