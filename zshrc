@@ -38,25 +38,31 @@ setopt EXTENDED_HISTORY
 bindkey '^x' zaw-history
 bindkey '^b' zaw-git-branches
 
-# alias
+######## ALIAS ########
+alias ..='cd ..'
 alias l='ls --color=auto'
 alias ls='ls --color=auto'
 alias ll='ls -al'
+
 alias gs='git status'
-alias ..='cd ..'
+
 alias hex2dec="printf '%d\n'"
 alias dec2hex="printf '%x\n'"
-alias bat="batcat"
-alias open='explorer.exe'
-alias k=kubectl
 
+alias bat="batcat"
+
+alias k=kubectl
 source <(kubectl completion zsh)
 
-# case ${OSTYPE} in
-#   darwin*)
-#     source ~/.dotfiles/zshrc/zshrc.darwin
-#     ;;
-#   linux*)
-#     source ~/.dotfiles/zshrc/zshrc.linux
-#     ;;
-# esac
+case ${OSTYPE} in
+  # darwin*)
+  #   source ~/.dotfiles/zsh/zshrc.darwin
+  #   ;;
+  linux*)
+    if [[ "$(uname -r)" == *microsoft* ]]; then
+      source ~/.dotfiles/zsh/zshrc.wsl
+    # else
+    #   source ~/.dotfiles/zsh/zshrc.linux
+    fi
+    ;;
+esac
