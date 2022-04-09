@@ -50,10 +50,10 @@
     - name: Create environment symbolic links
       when: wsl_env
       file:
-        src: "~/{{ item.name }}"
+        src: "{{ item.name }}"
         dest: "{{ item.dest }}"
         state: link
       loop:
-        - { name: '/mnt/c/Users/{{ wsl_ownername }}/Desktop', dest: 'Desktop' }
-        - { name: '/mnt/c/Users/{{ wsl_ownername }}/Documents', dest: 'Documents' }
-        - { name: '/mnt/c/Users/{{ wsl_ownername }}/Downloads', dest: 'Downloads' }
+        - { name: '/mnt/c/Users/{{ wsl_ownername }}/Desktop', dest: '~/Desktop' }
+        - { name: '/mnt/c/Users/{{ wsl_ownername }}/Documents', dest: '~/Documents' }
+        - { name: '/mnt/c/Users/{{ wsl_ownername }}/Downloads', dest: '~/Downloads' }
