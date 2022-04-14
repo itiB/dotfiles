@@ -45,7 +45,6 @@ bindkey '^b' zaw-git-branches
 ######## ALIAS ########
 alias ..='cd ..'
 alias l='ls'
-alias ls='ls -G'
 alias ll='ls -al'
 
 alias gs='git status'
@@ -91,10 +90,12 @@ faws() {
 
 
 case ${OSTYPE} in
-  # darwin*)
-  #   source ~/.dotfiles/zsh/zshrc.darwin
-  #   ;;
+  darwin*)
+    alias ls='ls -G'
+    # source ~/.dotfiles/zsh/zshrc.darwin
+    ;;
   linux*)
+    alias ls='ls --color=auto'
     if [[ "$(uname -r)" == *microsoft* ]]; then
       source ~/.dotfiles/zsh/zshrc.wsl
     # else
