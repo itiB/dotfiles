@@ -7,16 +7,20 @@
     - 'vars.yml'
     - 'vars/links.yml'
     - 'vars/apt.yml'
+    - 'vars/git_repos.yml'
 
   tasks:
-    # - name: clone itib/dotfile repo
-    #   git:
-    #     repo: https://github.com/itiB/dotfiles.git
-    #     dest: ~/.dotfiles
+    - name: clone git repos
+      git:
+        repo: "{{ item.repo }}"
+        dest: "{{ item.dest }}"
+        single_branch: yes
+        version: master
+      loop: "{{ git_repo }}"
 
     - name: Create folder
       file:
-        path: "{{item}}"
+        path: "{{ item }}"
         state: directory
       loop:
         - "~/.config/git/"
