@@ -18,5 +18,9 @@ winget install google.Chrome
 winget install Microsoft.Office
 winget install Valve.Steam
 winget install SlackTechnologies.Slack
+winget install -e --id VideoLAN.VLC
+winget install -e --id Zoom.Zoom
+winget install -e --id AgileBits.1Password
+winget install -e --id OBSProject.OBSStudio
 
 wsl --install
