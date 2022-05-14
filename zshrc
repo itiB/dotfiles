@@ -1,3 +1,6 @@
+######## initial setup ########
+. $HOME/.asdf/asdf.sh
+
 ######## zsh ########
 # Enable Powerlevel10k instant prompt
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -92,14 +95,14 @@ faws() {
 case ${OSTYPE} in
   darwin*)
     alias ls='ls -G'
-    # source ~/.dotfiles/zsh/zshrc.darwin
+    source ~/.dotfiles/zsh/darwin.zshrc
     ;;
   linux*)
     alias ls='ls --color=auto'
     if [[ "$(uname -r)" == *microsoft* ]]; then
-      source ~/.dotfiles/zsh/zshrc.wsl
-    # else
-    #   source ~/.dotfiles/zsh/zshrc.linux
+      source ~/.dotfiles/zsh/wsl.zshrc
+    else
+      source ~/.dotfiles/zsh/linux.zshrc
     fi
     ;;
 esac
