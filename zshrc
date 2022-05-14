@@ -88,13 +88,12 @@ faws() {
 }
 
 fghq () {
-    local selected_dir=$(ghq list | fzf --height 40% --reverse)
+    local selected_dir=$(ghq list | grep -v "/archive/" | fzf --height 40% --reverse)
     target=$(ghq root)/$selected_dir
     if [ -n "$target" ]; then
         cd ${target}
         zle accept-line
     fi
-    zle clear-screen
 }
 zle -N fghq
 
