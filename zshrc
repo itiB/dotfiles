@@ -24,7 +24,6 @@ autoload -Uz _zinit
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zaw
 
 # LOCAL
 [[ ! -f ~/.zshrc.local ]] || source ~/.zshrc.local
@@ -41,9 +40,6 @@ setopt share_history
 setopt inc_append_history
 setopt hist_ignore_dups
 setopt EXTENDED_HISTORY
-
-bindkey '^x' zaw-history
-bindkey '^b' zaw-git-branches
 
 ######## ALIAS ########
 alias ..='cd ..'
@@ -91,6 +87,34 @@ faws() {
     AWS_PROFILE=${awsLoginHost}
 }
 
+fghq () {
+    local selected_dir=$(ghq list | fzf --height 40% --reverse)
+    target=$(ghq root)/$selected_dir
+    if [ -n "$target" ]; then
+        cd ${target}
+        zle accept-line
+    fi
+    zle clear-screen
+}
+zle -N fghq
+
+fbr() {
+  local selected_branch=$(git for-each-ref --format='%(refname)' --sort=-committerdate refs/heads | perl -pne 's{^refs/heads/}{}' | fzf --query "$LBUFFER" --height 40% --reverse)
+
+  if [ -n "$selected_branch" ]; then
+    BUFFER="git checkout ${selected_branch}"
+    zle accept-line
+  fi
+
+  zle reset-prompt
+}
+zle -N fbr
+
+fhistory() {
+  BUFFER=$(history -n -r 1 | fzf --reverse --no-sort +m --query "$LBUFFER" --prompt="History > ")
+  CURSOR=$#BUFFER
+}
+zle -N fhistory
 
 case ${OSTYPE} in
   darwin*)

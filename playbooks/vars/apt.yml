@@ -6,3 +6,4 @@ apt:
   unzip:
   socat:
   bat:
+  fzf:
