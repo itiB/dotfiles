@@ -2,8 +2,13 @@
 apt:
   vim:
   python3-pip:
+  python3-venv:
   tig:
   unzip:
   socat:
   bat:
   fzf:
+  build-essential:
+  libssl-dev:
+  libreadline-dev:
+  zlib1g-dev:
