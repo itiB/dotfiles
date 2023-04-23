@@ -4,3 +4,5 @@ links:
   dest: ~/.zshrc
 - name: vimrc
   dest: ~/.vimrc
+- name: aqua.yaml
+  dest: ~/.config/aquaproj-aqua/aqua.yaml
