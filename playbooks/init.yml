@@ -15,8 +15,11 @@
         repo: "{{ item.repo }}"
         dest: "{{ item.dest }}"
         single_branch: yes
+        force: no
+        update: yes
         version: master
       loop: "{{ git_repo }}"
+      ignore_errors: yes
 
     - name: Create folder
       file:
@@ -65,21 +68,18 @@
 
     - name: chsh
       become: yes
-      command:
+      shell:
         "chsh -s /usr/bin/zsh"
 
     - name: install aqua
-      become: yes
-      shell:
-        - "curl -sSfL -O https://raw.githubusercontent.com/aquaproj/aqua-installer/v2.1.1/aqua-installer"
-        - "echo "c2af02bdd15da6794f9c98db40332c804224930212f553a805425441f8331665 aqua-installer" | sha256sum -c"
-        - "chmod +x aqua-installer"
-        - "./aqua-installer"
-        - "rm aqua-installer"
+      shell: >
+        curl -sSfL -O https://raw.githubusercontent.com/aquaproj/aqua-installer/v2.1.1/aqua-installer &&
+        echo 'c2af02bdd15da6794f9c98db40332c804224930212f553a805425441f8331665 aqua-installer' | sha256sum -c &&
+        chmod +x aqua-installer &&
+        ./aqua-installer &&
+        rm aqua-installer
 
     - name: execute aqua
-      become: yes
-      command:
       shell: cd ~/.config/aquaproj-aqua && aqua i -a
       args:
-        chdir: "~/" # コマンド実行後にホームディレクトリに戻る
+        chdir: "~/"
