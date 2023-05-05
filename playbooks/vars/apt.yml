@@ -10,5 +10,7 @@ apt:
   fzf:
   build-essential:
   libssl-dev:
+  libsqlite3-dev:
   libreadline-dev:
   zlib1g-dev:
+  direnv:

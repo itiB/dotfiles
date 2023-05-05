@@ -67,6 +67,9 @@ alias d_rmi='docker images -aq | xargs docker rmi'
 alias pip-upgrade-all="pip list -o | tail -n +3 | awk '{ print \$1 }' | xargs pip install -U"
 
 source <(kubectl completion zsh)
+export EDITOR=vim
+eval "$(direnv hook zsh)"
+
 
 ##### TOOLS #####
 fssh() {
@@ -132,3 +135,17 @@ case ${OSTYPE} in
     fi
     ;;
 esac
+
+opr () {
+  who=$(op whoami)
+  if [[ $? != 0 ]]
+  then
+    eval $(op signin)
+  fi
+  if [[ -f "$PWD/.env" ]]
+  then
+    op run --env-file=$PWD/.env -- $@
+  else
+    op run --env-file='~/config/.env.1password' -- $@
+  fi
+}
