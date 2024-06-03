@@ -1,0 +1,12 @@
+.idea/
+build/
+.DS_Store
+__pycache__
+.envrc
+kubeconfig.yaml
+.venv
+.vscode
+.env
+.metals
+* copy*
+.scala-build

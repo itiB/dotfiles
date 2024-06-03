@@ -6,3 +6,7 @@ links:
   dest: ~/.vimrc
 - name: aqua.yaml
   dest: ~/.config/aquaproj-aqua/aqua.yaml
+- name: config/git.config
+  dest: ~/.config/git/config
+- name: config/git.ignore
+  dest: ~/.config/git/ignore
