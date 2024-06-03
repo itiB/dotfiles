@@ -1,5 +1,4 @@
 ######## initial setup ########
-# . $HOME/.asdf/asdf.sh
 export PATH="${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}/bin:$PATH"
 export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME:-$HOME/.config}/aquaproj-aqua/aqua.yaml
 
@@ -27,12 +26,7 @@ zinit ice depth=1; zinit light romkatv/powerlevel10k
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
 
-# LOCAL
-[[ ! -f ~/.zshrc.local ]] || source ~/.zshrc.local
 [[ ! -f ~/.dotfiles/zsh/p10k.zsh ]] || source ~/.dotfiles/zsh/p10k.zsh
-
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-
 
 ######## HISTORY ########
 export HISTFILE=${HOME}/.zsh/zsh_history
@@ -43,83 +37,24 @@ setopt inc_append_history
 setopt hist_ignore_dups
 setopt EXTENDED_HISTORY
 
-######## ALIAS ########
-alias ..='cd ..'
-alias l='ls'
-alias ll='ls -al'
+######## AUTO COMPLETE ########
+autoload -U compinit
+compinit -u
+autoload -U colors # 補完候補に色つける
+colors
+zstyle ':completion:*' list-colors "${LS_COLORS}"
+setopt complete_in_word                         # 単語の入力途中でもTab補完を有効化
+zstyle ':completion:*:default' menu select=1    # 補完候補をハイライト
+zstyle ':completion::complete:*' use-cache true # キャッシュの利用による補完の高速化
+setopt list_packed                              # 補完リストの表示間隔を狭く
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 大文字、小文字を区別せず補完
 
-alias gs='git status'
-
-alias hex2dec="printf '%d\n'"
-alias dec2hex="printf '%x\n'"
-# urlencoding
-# https://www.webdevqa.jp.net/ja/shell-script/url%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%AE%E3%83%87%E3%82%B3%E3%83%BC%E3%83%89%EF%BC%88%E3%83%91%E3%83%BC%E3%82%BB%E3%83%B3%E3%83%88%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%EF%BC%89/960793177/amp/
-alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))"'
-alias urlencode='python3 -c "import sys, urllib.parse as ul; print(ul.quote_plus(sys.argv[1]))"'
-
-alias bat="batcat"
-alias k="kubectl"
-alias tf="terraform"
-alias awsaccount='aws sts get-caller-identity'
-alias doc='docker-compose'
-alias d_rm='docker ps -aq | xargs docker rm'
-alias d_rmi='docker images -aq | xargs docker rmi'
-alias pip-upgrade-all="pip list -o | tail -n +3 | awk '{ print \$1 }' | xargs pip install -U"
-
-source <(kubectl completion zsh)
+######## TOOLS ########
 export EDITOR=vim
+source <(kubectl completion zsh)
+KUBECONFIG=$KUBECONFIG:~/.kube/config
+source <(stern --completion=zsh)
 eval "$(direnv hook zsh)"
-
-
-##### TOOLS #####
-fssh() {
-    local sshLoginHost
-    sshLoginHost=`cat ~/.ssh/config | grep -i ^host | awk '{print $2}' | fzf --height 40% --reverse`
-
-    if [ "$sshLoginHost" = "" ]; then
-        # ex) Ctrl-C.
-        return 1
-    fi
-
-    ssh ${sshLoginHost}
-}
-
-faws() {
-    local awsLoginHost
-    awsLoginHost=`cat ~/.aws/config | grep -i '^\[profile' | awk '{print substr($2, 1, length($2)-1)}' | fzf --height 40% --reverse`
-    if [ "$awsLoginHost" = "" ]; then
-        return 1
-    fi
-    AWS_PROFILE=${awsLoginHost}
-}
-
-fghq () {
-    local selected_dir=$(ghq list | grep -v "/archive/" | fzf --height 40% --reverse)
-    target=$(ghq root)/$selected_dir
-    if [ -n "$target" ]; then
-        cd ${target}
-        zle accept-line
-    fi
-}
-zle -N fghq
-
-fbr() {
-  local selected_branch=$(git for-each-ref --format='%(refname)' --sort=-committerdate refs/heads | perl -pne 's{^refs/heads/}{}' | fzf --query "$LBUFFER" --height 40% --reverse)
-
-  if [ -n "$selected_branch" ]; then
-    BUFFER="git checkout ${selected_branch}"
-    zle accept-line
-  fi
-
-  zle reset-prompt
-}
-zle -N fbr
-
-fhistory() {
-  BUFFER=$(history -n -r 1 | fzf --reverse --no-sort +m --query "$LBUFFER" --prompt="History > ")
-  CURSOR=$#BUFFER
-}
-zle -N fhistory
 
 case ${OSTYPE} in
   darwin*)
@@ -136,16 +71,10 @@ case ${OSTYPE} in
     ;;
 esac
 
-opr () {
-  who=$(op whoami)
-  if [[ $? != 0 ]]
-  then
-    eval $(op signin)
-  fi
-  if [[ -f "$PWD/.env" ]]
-  then
-    op run --env-file=$PWD/.env -- $@
-  else
-    op run --env-file='~/config/.env.1password' -- $@
-  fi
-}
+[[ ! -f ~/.zshrc.local ]] || source ~/.zshrc.local
+source ~/.dotfiles/zsh/arias.zshrc
+source ~/.dotfiles/zsh/functions.zshrc
+
+# コマンドの打ち間違いを指摘してくれる
+setopt correct
+SPROMPT="correct: $RED%R$DEFAULT -> $GREEN%r$DEFAULT ? [Yes/No/Abort/Edit] => "
