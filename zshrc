@@ -1,7 +1,3 @@
-######## initial setup ########
-export PATH="${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}/bin:$PATH"
-export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME:-$HOME/.config}/aquaproj-aqua/aqua.yaml
-
 ######## zsh ########
 # Enable Powerlevel10k instant prompt
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -49,13 +45,6 @@ zstyle ':completion::complete:*' use-cache true # キャッシュの利用によ
 setopt list_packed                              # 補完リストの表示間隔を狭く
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 大文字、小文字を区別せず補完
 
-######## TOOLS ########
-export EDITOR=vim
-source <(kubectl completion zsh)
-KUBECONFIG=$KUBECONFIG:~/.kube/config
-source <(stern --completion=zsh)
-eval "$(direnv hook zsh)"
-
 case ${OSTYPE} in
   darwin*)
     alias ls='ls -G'
@@ -70,6 +59,19 @@ case ${OSTYPE} in
     fi
     ;;
 esac
+
+######## TOOLS ########
+export PATH="${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}/bin:$PATH"
+export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME:-$HOME/.config}/aquaproj-aqua/aqua.yaml
+
+export EDITOR=vim
+source <(kubectl completion zsh)
+KUBECONFIG=$KUBECONFIG:~/.kube/config
+source <(stern --completion=zsh)
+eval "$(direnv hook zsh)"
+export PATH=$PATH:$HOME/go/bin
+export GOROOT=`go env GOROOT`
+export PATH=$GOROOT/bin:$PATH
 
 [[ ! -f ~/.zshrc.local ]] || source ~/.zshrc.local
 source ~/.dotfiles/zsh/arias.zshrc
