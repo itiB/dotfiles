@@ -1,3 +1,4 @@
+typeset -U path PATH
 ######## zsh ########
 # Enable Powerlevel10k instant prompt
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -60,8 +61,8 @@ case ${OSTYPE} in
     ;;
 esac
 
-######## TOOLS ########
-export PATH="${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}/bin:$PATH"
+# ######## TOOLS ########
+path=(${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}/bin(N-/) $path)
 export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME:-$HOME/.config}/aquaproj-aqua/aqua.yaml
 
 export EDITOR=vim
@@ -69,9 +70,9 @@ source <(kubectl completion zsh)
 KUBECONFIG=$KUBECONFIG:~/.kube/config
 source <(stern --completion=zsh)
 eval "$(direnv hook zsh)"
-export PATH=$PATH:$HOME/go/bin
+path=($HOME/go/bin(N-/) $path)
 export GOROOT=`go env GOROOT`
-export PATH=$GOROOT/bin:$PATH
+path=($GOROOT/bin(N-/) $path)
 
 [[ ! -f ~/.zshrc.local ]] || source ~/.zshrc.local
 source ~/.dotfiles/zsh/arias.zshrc
