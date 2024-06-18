@@ -68,10 +68,9 @@ export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME:-$HOME/.conf
 export EDITOR=vim
 source <(kubectl completion zsh)
 KUBECONFIG=$KUBECONFIG:~/.kube/config
-source <(stern --completion=zsh)
 eval "$(direnv hook zsh)"
 path=($HOME/go/bin(N-/) $path)
-export GOROOT=`go env GOROOT`
+export GOROOT=`go1.22.4 env GOROOT`
 path=($GOROOT/bin(N-/) $path)
 
 [[ ! -f ~/.zshrc.local ]] || source ~/.zshrc.local

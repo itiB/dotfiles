@@ -21,4 +21,7 @@ alias d_rm='docker ps -aq | xargs docker rm'
 alias d_rmi='docker images -aq | xargs docker rmi'
 alias pip-upgrade-all="pip list -o | tail -n +3 | awk '{ print \$1 }' | xargs pip install -U"
 
-alias stern='stern --template-file="~/.config/stern/stern.tpl"'
+if command -v stern >/dev/null 2>&1; then
+    alias stern='stern --template-file="~/.config/stern/stern.tpl"'
+    source <(stern --completion=zsh)
+fi
