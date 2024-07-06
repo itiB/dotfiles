@@ -70,8 +70,9 @@ source <(kubectl completion zsh)
 KUBECONFIG=$KUBECONFIG:~/.kube/config
 eval "$(direnv hook zsh)"
 path=($HOME/go/bin(N-/) $path)
-export GOROOT=`go1.22.4 env GOROOT`
-path=($GOROOT/bin(N-/) $path)
+path=($HOME/.local/bin(N-/) $path)
+path=(/usr/local/go/bin(N-/) $path)
+# export GOROOT=`go1.22.4 env GOROOT`
 
 [[ ! -f ~/.zshrc.local ]] || source ~/.zshrc.local
 source ~/.dotfiles/zsh/arias.zshrc
