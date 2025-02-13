@@ -4,9 +4,11 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 bindkey '^[fhistory' fhistory
 bindkey '^[fbr' fbr
 bindkey '^[clear-screen' clear-screen
+bindkey '^[fghq' fghq
 
 # rm Less's ESC[
 export LESS="-iRMXS"
 
 # alias
 alias clip='pbcopy'
+alias act='act --container-architecture linux/amd64'
