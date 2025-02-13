@@ -4,6 +4,9 @@ alias l='ls'
 alias ll='ls -al'
 
 alias gs='git status'
+alias main='git checkout main'
+alias master='git checkout master'
+alias push='git push -u origin HEAD'
 
 alias hex2dec="printf '%d\n'"
 alias dec2hex="printf '%x\n'"
@@ -25,3 +28,5 @@ if command -v stern >/dev/null 2>&1; then
     alias stern='stern --template-file="~/.config/stern/stern.tpl"'
     source <(stern --completion=zsh)
 fi
+
+alias pn='pnpm'
