@@ -19,6 +19,15 @@ faws() {
     AWS_PROFILE=${awsLoginHost}
 }
 
+caws() {
+    local awsLoginHost
+    awsLoginHost=`cat ~/.aws/config | grep -i '^\[profile' | awk '{print substr($2, 1, length($2)-1)}' | fzf --height 40% --reverse`
+    if [ "$awsLoginHost" = "" ]; then
+        return 1
+    fi
+    echo ${awsLoginHost} | pbcopy
+}
+
 fghq () {
     local selected_dir=$(ghq list | grep -v "/archive/" | fzf --height 40% --reverse)
     target=$(ghq root)/$selected_dir
