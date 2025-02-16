@@ -66,8 +66,10 @@ path=(${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}/bin(N
 export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME:-$HOME/.config}/aquaproj-aqua/aqua.yaml
 
 export EDITOR=vim
-source <(kubectl completion zsh)
-KUBECONFIG=$KUBECONFIG:~/.kube/config
+if command -v kubectl &> /dev/null; then
+    source <(kubectl completion zsh)
+    KUBECONFIG=$KUBECONFIG:~/.kube/config
+fi
 eval "$(direnv hook zsh)"
 path=($HOME/go/bin(N-/) $path)
 path=($HOME/.local/bin(N-/) $path)
