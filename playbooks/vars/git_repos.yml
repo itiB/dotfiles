@@ -1,4 +1,0 @@
----
-git_repo:
-- repo: https://github.com/itiB/dotfiles.git
-  dest: ~/.dotfiles
