@@ -1,5 +1,5 @@
-mkdir ~/.config
-mkdir ~/.config/wezterm
-ln -s wezterm/wezterm.lua ~/.config/wezterm/wezterm.lua
+ROOT=$(cd $(dirname $0);pwd)
 
-ln -s starship/starship.toml ~/.config/starship.toml
+mkdir ~/.config
+ln -s $ROOT/wezterm ~/.config/wezterm
+ln -s $ROOT/aquaproj-aqua ~/.config/aquaproj-aqua
