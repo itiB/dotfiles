@@ -2,8 +2,10 @@ eval "$(starship init zsh)"
 
 typeset -U path PATH
 
-source ~/zsh/fzf.zshrc
-source ~/zsh/alias.zshrc
+eval "$(fzf --zsh)"
+
+source ~/.dotfiles/zsh/alias.zshrc
+source ~/.dotfiles/zsh/functions.zshrc
 
 
 case ${OSTYPE} in
@@ -14,8 +16,14 @@ case ${OSTYPE} in
     alias clip='pbcopy'
     alias ls='ls -G'
 
-    source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-    source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    if type brew &>/dev/null; then
+      source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+      source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+      FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+      autoload -Uz compinit
+      compinit
+    fi
     ;;
   linux*)
     alias ls='ls --color=auto'

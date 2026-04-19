@@ -88,6 +88,11 @@ config.keys = {
 	{ key = "3", mods = "LEADER", action = act.ActivateTab(2) },
 	{ key = "4", mods = "LEADER", action = act.ActivateTab(3) },
 	{ key = "5", mods = "LEADER", action = act.ActivateTab(4) },
+
+	-- zle 呼び出し
+	{ key = "g", mods = "CMD", action = act.SendString("\x1b[CmdG") },
+	{ key = "h", mods = "CMD", action = act.SendString("\x1b[CmdH") },
+	{ key = "b", mods = "CMD", action = act.SendString("\x1b[CmdB") },
 }
 
 -- =====================
