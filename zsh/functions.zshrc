@@ -12,6 +12,7 @@ fghq() {
   local dir
   dir=$(ghq list -p | fzf) || return
   cd "$dir"
+  zle accept-line
 }
 zle -N fghq
 bindkey "\e[CmdG" fghq
@@ -21,6 +22,7 @@ fbr() {
   local selected_branch
   selected_branch=$(git for-each-ref --format='%(refname)' --sort=-committerdate refs/heads | perl -pne 's{^refs/heads/}{}' | fzf --query "$LBUFFER") || return
   git checkout ${selected_branch}
+  zle accept-line
 }
 zle -N fbr
 bindkey "\e[CmdB" fbr

@@ -7,6 +7,13 @@ eval "$(fzf --zsh)"
 source ~/.dotfiles/zsh/alias.zshrc
 source ~/.dotfiles/zsh/functions.zshrc
 
+######## HISTORY ########
+export HISTSIZE=10000
+export SAVEHIST=100000
+setopt share_history
+setopt inc_append_history
+setopt hist_ignore_dups
+setopt EXTENDED_HISTORY
 
 case ${OSTYPE} in
   darwin*)
@@ -35,6 +42,12 @@ case ${OSTYPE} in
     ;;
 esac
 eval "$(mise activate zsh)"
+path=($HOME/.local/bin(N-/) $path)
 export PATH="$(aqua root-dir)/bin:$PATH"
 export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME:-$HOME/.config}/aquaproj-aqua/aqua.yaml
-export PATH="$HOME/.local/bin:$PATH"
+
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=($HOME/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
