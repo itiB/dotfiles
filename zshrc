@@ -6,6 +6,7 @@ eval "$(fzf --zsh)"
 
 source ~/.dotfiles/zsh/alias.zshrc
 source ~/.dotfiles/zsh/functions.zshrc
+source ~/.dotfiles/zsh/herdr.zshrc
 
 ######## HISTORY ########
 export HISTSIZE=10000
@@ -14,6 +15,8 @@ setopt share_history
 setopt inc_append_history
 setopt hist_ignore_dups
 setopt EXTENDED_HISTORY
+setopt HIST_IGNORE_SPACE
+
 
 case ${OSTYPE} in
   darwin*)
